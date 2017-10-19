@@ -1207,22 +1207,31 @@
           data = instance[method].getData.apply(this, params);
         }
         var walletInstance = wallet.web3.eth.contract(wallet.json.multiSigDailyLimit.abi).at(address);
+        
+        walletInstance.submitTransaction(
+          tx.to,
+          tx.value,
+          data,
+          wallet.txDefaults(),
+          cb
+        );
+        // old version with count, need to find out why it was needed
         // Get nonce
-        wallet.getTransactionCount(address, true, true, function (e, count) {
-          if (e) {
-            cb(e);
-          }
-          else {
-            walletInstance.submitTransaction(
-              tx.to,
-              tx.value,
-              data,
-              count,
-              wallet.txDefaults(),
-              cb
-            );
-          }
-        }).call();
+        // wallet.getTransactionCount(address, true, true, function (e, count) {
+        //   if (e) {
+        //     cb(e);
+        //   }
+        //   else {
+        //     walletInstance.submitTransaction(
+        //       tx.to,
+        //       tx.value,
+        //       data,
+        //       count,
+        //       wallet.txDefaults(),
+        //       cb
+        //     );
+        //   }
+        // }).call();
       };
 
       /**
