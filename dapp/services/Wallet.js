@@ -1085,10 +1085,22 @@
       */
       wallet.confirmTransaction = function (address, txId, cb) {
         var instance = wallet.web3.eth.contract(wallet.json.multiSigDailyLimit.abi).at(address);
-        instance.confirmTransaction(
+        instance.confirmTransaction.estimateGas(
           txId,
           wallet.txDefaults(),
-          cb
+          (err, gas) => {
+            if (err) {
+              cb(err);
+            } else {
+              instance.confirmTransaction(
+                txId,
+                wallet.txDefaults({
+                  gas: Math.round((gas * 1.1) / 1000) * 1000
+                }),
+                cb
+              );
+            }
+          }
         );
       };
 
@@ -1207,13 +1219,26 @@
           data = instance[method].getData.apply(this, params);
         }
         var walletInstance = wallet.web3.eth.contract(wallet.json.multiSigDailyLimit.abi).at(address);
-        
-        walletInstance.submitTransaction(
+        walletInstance.submitTransaction.estimateGas(
           tx.to,
           tx.value,
           data,
           wallet.txDefaults(),
-          cb
+          (err, gas) => {
+            if (err) {
+              cb(err);
+            } else {
+              walletInstance.submitTransaction(
+                tx.to,
+                tx.value,
+                data,
+                wallet.txDefaults({
+                  gas: Math.round((gas * 1.1) / 1000) * 1000
+                }),
+                cb
+              );
+            }
+          }
         );
         // old version with count, need to find out why it was needed
         // Get nonce
