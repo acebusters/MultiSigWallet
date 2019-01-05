@@ -17,7 +17,10 @@ angular.module('multiSigWeb').run(['$templateCache', function($templateCache) {
   $templateCache.put('src/partials/accounts.html',
     "<div class=\"panel panel-default\">\n" +
     "  <div class=\"panel-heading\">\n" +
-    "    <div class=\"pull-right\">\n" +
+    "    <h3>\n" +
+    "      Accounts\n" +
+    "    </h3>\n" +
+    "    <div>\n" +
     "      <button type=\"button\" class=\"btn btn-default\"\n" +
     "        id=\"add-lightwallet-account\"\n" +
     "        ng-click=\"createWallet()\">\n" +
@@ -29,9 +32,6 @@ angular.module('multiSigWeb').run(['$templateCache', function($templateCache) {
     "        Import\n" +
     "      </button>\n" +
     "    </div>\n" +
-    "    <h4>\n" +
-    "      Accounts\n" +
-    "    </h4>\n" +
     "  </div>\n" +
     "  <table class=\"table table-hover table-bordered table-striped\">\n" +
     "    <thead>\n" +
@@ -326,7 +326,10 @@ angular.module('multiSigWeb').run(['$templateCache', function($templateCache) {
   $templateCache.put('src/partials/transactions.html',
     "<div class=\"panel panel-default\">\n" +
     "  <div class=\"panel-heading\">\n" +
-    "    <div class=\"pull-right\">\n" +
+    "    <h3>\n" +
+    "      Transactions\n" +
+    "    </h3>\n" +
+    "    <div>\n" +
     "      <button type=\"button\" class=\"btn btn-default\" disabled-if-no-accounts\n" +
     "       ng-click=\"sendTransaction()\" show-hide-by-connectivity=\"online\">\n" +
     "        Send transaction\n" +
@@ -342,9 +345,6 @@ angular.module('multiSigWeb').run(['$templateCache', function($templateCache) {
     "        Remove all\n" +
     "      </button>\n" +
     "    </div>\n" +
-    "    <h4>\n" +
-    "      Transactions\n" +
-    "    </h4>\n" +
     "  </div>\n" +
     "  <table class=\"table table-hover table-bordered table-striped\">\n" +
     "    <thead>\n" +
@@ -464,15 +464,43 @@ angular.module('multiSigWeb').run(['$templateCache', function($templateCache) {
 
   $templateCache.put('src/partials/wallet.html',
     "<div class=\"page-header\">\n" +
-    "  <h1>\n" +
-    "    {{wallet.name}} {{balance|ether}}\n" +
-    "  </h1>\n" +
-    "  <h5 class=\"grey\">{{wallet.address}}</h5>\n" +
+    "  <div>\n" +
+    "    <h1>\n" +
+    "      {{wallet.name}}\n" +
+    "    </h1>\n" +
+    "    <h5 class=\"grey\">{{wallet.address}}</h5>\n" +
+    "  </div>\n" +
+    "  <div class=\"button-panel\">\n" +
+    "    <button type=\"button\" class=\"btn btn-primary btn-lg\" disabled-if-no-accounts\n" +
+    "      ng-click=\"withdrawToken(wallet.tokens['0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359'])\">\n" +
+    "      Add DAI tx\n" +
+    "    </button>\n" +
+    "    <button type=\"button\" class=\"btn btn-primary btn-lg\" disabled-if-no-accounts\n" +
+    "      ng-click=\"addTransaction()\">\n" +
+    "        Add tx\n" +
+    "    </button>\n" +
+    "    <button type=\"button\" ng-click=\"hideOwners=!hideOwners\" class=\"btn btn-default btn-sm\">\n" +
+    "      Owners\n" +
+    "    </button>\n" +
+    "    <button type=\"button\" ng-click=\"hideTokens=!hideTokens\" class=\"btn btn-default btn-sm\">\n" +
+    "      Tokens\n" +
+    "    </button>\n" +
+    "  </div>\n" +
     "</div>\n" +
+    "<div class=\"status-panel\">\n" +
+    "  <div>Balance:</div>\n" +
+    "  <div>\n" +
+    "    {{balance|ether}}<br/>\n" +
+    "    {{wallet.tokens['0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359']|token}}\n" +
+    "  </div>\n" +
+    "</div>  \n" +
     "<!-- Owners panel -->\n" +
-    "<div class=\"panel panel-default\">\n" +
+    "<div class=\"panel panel-default\" uib-collapse=\"hideOwners\">\n" +
     "  <div class=\"panel-heading\">\n" +
-    "    <div class=\"pull-right\">\n" +
+    "    <h3>\n" +
+    "        Owners\n" +
+    "    </h3>\n" +
+    "    <div>\n" +
     "      <button type=\"button\" disabled-if-no-accounts ng-click=\"removeOwnerOffline()\" class=\"btn btn-default\" show-hide-by-connectivity=\"offline\">\n" +
     "        Remove offline\n" +
     "      </button>\n" +
@@ -482,18 +510,9 @@ angular.module('multiSigWeb').run(['$templateCache', function($templateCache) {
     "      <button type=\"button\" disabled-if-no-accounts ng-click=\"addOwner()\" class=\"btn btn-default\">\n" +
     "        Add\n" +
     "      </button>\n" +
-    "      <button type=\"button\" ng-click=\"hideOwners=true\" class=\"btn btn-default\" ng-hide=\"hideOwners\">\n" +
-    "        <span class=\"glyphicon glyphicon-menu-up\" aria-hidden=\"true\"></span>\n" +
-    "      </button>\n" +
-    "      <button type=\"button\" ng-click=\"hideOwners=false\" class=\"btn btn-default\" ng-show=\"hideOwners\">\n" +
-    "        <span class=\"glyphicon glyphicon-menu-down\" aria-hidden=\"true\"></span>\n" +
-    "      </button>\n" +
     "    </div>\n" +
-    "    <h4>\n" +
-    "      Owners\n" +
-    "    </h4>\n" +
     "  </div>\n" +
-    "  <table class=\"table table-hover table-bordered table-striped\" uib-collapse=\"hideOwners\">\n" +
+    "  <table class=\"table table-hover table-bordered table-striped\">\n" +
     "    <thead>\n" +
     "      <tr>\n" +
     "        <th>\n" +
@@ -535,24 +554,18 @@ angular.module('multiSigWeb').run(['$templateCache', function($templateCache) {
     "  </table>\n" +
     "</div>\n" +
     "<!-- Tokens panel -->\n" +
-    "<div class=\"panel panel-default\">\n" +
+    "<div class=\"panel panel-default\" uib-collapse=\"hideTokens\">\n" +
     "  <div class=\"panel-heading\">\n" +
-    "    <div class=\"pull-right\">\n" +
+    "    <h3>\n" +
+    "        Tokens\n" +
+    "    </h3>\n" +
+    "    <div>\n" +
     "      <button type=\"button\" ng-click=\"addToken()\" class=\"btn btn-default\">\n" +
     "        Add\n" +
     "      </button>\n" +
-    "      <button type=\"button\" ng-click=\"hideTokens=true\" class=\"btn btn-default\" ng-hide=\"hideTokens\">\n" +
-    "        <span class=\"glyphicon glyphicon-menu-up\" aria-hidden=\"true\"></span>\n" +
-    "      </button>\n" +
-    "      <button type=\"button\" ng-click=\"hideTokens=false\" class=\"btn btn-default\" ng-show=\"hideTokens\">\n" +
-    "        <span class=\"glyphicon glyphicon-menu-down\" aria-hidden=\"true\"></span>\n" +
-    "      </button>\n" +
     "    </div>\n" +
-    "    <h4>\n" +
-    "      Tokens\n" +
-    "    </h4>\n" +
     "  </div>\n" +
-    "  <table class=\"table table-hover table-bordered table-striped\" uib-collapse=\"hideTokens\">\n" +
+    "  <table class=\"table table-hover table-bordered table-striped\">\n" +
     "    <thead>\n" +
     "      <tr>\n" +
     "        <th>\n" +
@@ -607,7 +620,11 @@ angular.module('multiSigWeb').run(['$templateCache', function($templateCache) {
     "<!-- Multisig transactions panel -->\n" +
     "<div class=\"panel panel-default\">\n" +
     "  <div class=\"panel-heading\">\n" +
-    "    <div class=\"pull-right form-inline\">\n" +
+    "    <h3>\n" +
+    "        Multisig transactions\n" +
+    "    </h3>\n" +
+    "    \n" +
+    "    <div class=\"form-inline\">\n" +
     "      <button type=\"button\" class=\"btn btn-default\" disabled-if-no-accounts\n" +
     "      ng-click=\"confirmMultisigTransactionOffline()\" show-hide-by-connectivity=\"offline\">\n" +
     "        Confirm offline\n" +
@@ -647,9 +664,6 @@ angular.module('multiSigWeb').run(['$templateCache', function($templateCache) {
     "        </option>\n" +
     "      </select>\n" +
     "    </div>\n" +
-    "    <h4>\n" +
-    "      Multisig transactions\n" +
-    "    </h4>\n" +
     "  </div>\n" +
     "  <table class=\"table table-hover table-bordered table-striped\">\n" +
     "    <thead>\n" +
@@ -774,7 +788,7 @@ angular.module('multiSigWeb').run(['$templateCache', function($templateCache) {
     "    No multisig transactions. Send a multisig transaction <a href=\"\" ng-click=\"addTransaction()\">now</a>.\n" +
     "  </div>\n" +
     "  <div class=\"panel-footer\">\n" +
-    "    <ul uib-pagination total-items=\"totalItems\" ng-model=\"currentPage\" ng-change=\"updateTransactions()\" items-per-page=\"itemsPerPage\"></ul>\n" +
+    "    <ul uib-pagination max-size=\"5\" total-items=\"totalItems\" ng-model=\"currentPage\" ng-change=\"updateTransactions()\" items-per-page=\"itemsPerPage\"></ul>\n" +
     "  </div>\n" +
     "</div>\n"
   );
@@ -783,14 +797,14 @@ angular.module('multiSigWeb').run(['$templateCache', function($templateCache) {
   $templateCache.put('src/partials/wallets.html',
     "<div class=\"panel panel-default\">\n" +
     "  <div class=\"panel-heading\">\n" +
-    "    <div class=\"pull-right\">\n" +
+    "    <h3>\n" +
+    "      Wallets\n" +
+    "    </h3>\n" +
+    "    <div>\n" +
     "      <button type=\"button\" class=\"btn btn-default\" ng-click=\"newWalletSelect()\">\n" +
     "        Add\n" +
     "      </button>\n" +
     "    </div>\n" +
-    "    <h4>\n" +
-    "      Wallets\n" +
-    "    </h4>\n" +
     "  </div>\n" +
     "  <table class=\"table table-hover table-bordered table-striped\">\n" +
     "    <thead>\n" +

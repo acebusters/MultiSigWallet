@@ -21,11 +21,6 @@ html {
 
 body {
     padding-top: 70px;
-    background-image: url(../img/gnosis-logo.svg);
-    background-repeat: no-repeat;
-    background-position: bottom center;
-    background-size: 512px;
-    background-attachment: fixed;
 }
 
 .navbar-brand > img {
@@ -179,3 +174,44 @@ input[name="editable-select"]:disabled {
 ::selection {
   background: #b3c3ce;
   }
+
+.page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+.button-panel > button {
+  margin-right: 10px;
+}
+
+.status-panel {
+  display: flex;
+  padding: 0 0 40px;
+}
+
+.status-panel > * {
+  margin-right: 5px;
+}
+
+.panel-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 0 !important;
+}
+
+.panel-footer {
+  border-top: 0 !important;
+}
+
+nav {
+  padding: 10px 30px !important;
+}
+
+.modal-header,
+.modal-footer {
+  border: 0 !important;
+}

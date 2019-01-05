@@ -1,15 +1,41 @@
 <div class="page-header">
-  <h1>
-    {{wallet.name}}
-  </h1>
-  <h5 class="grey">{{wallet.address}}</h5>
-  <div>{{balance|ether}}</div>
-  <div>{{wallet.tokens['0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359']|token}}</div>
+  <div>
+    <h1>
+      {{wallet.name}}
+    </h1>
+    <h5 class="grey">{{wallet.address}}</h5>
+  </div>
+  <div class="button-panel">
+    <button type="button" class="btn btn-primary btn-lg" disabled-if-no-accounts
+      ng-click="withdrawToken(wallet.tokens['0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359'])">
+      Add DAI tx
+    </button>
+    <button type="button" class="btn btn-primary btn-lg" disabled-if-no-accounts
+      ng-click="addTransaction()">
+        Add tx
+    </button>
+    <button type="button" ng-click="hideOwners=!hideOwners" class="btn btn-default btn-sm">
+      Owners
+    </button>
+    <button type="button" ng-click="hideTokens=!hideTokens" class="btn btn-default btn-sm">
+      Tokens
+    </button>
+  </div>
+</div>
+<div class="status-panel">
+  <div>Balance:</div>
+  <div>
+    {{balance|ether}}<br/>
+    {{wallet.tokens['0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359']|token}}
+  </div>
 </div>  
 <!-- Owners panel -->
-<div class="panel panel-default">
+<div class="panel panel-default" uib-collapse="hideOwners">
   <div class="panel-heading">
-    <div class="pull-right">
+    <h3>
+        Owners
+    </h3>
+    <div>
       <button type="button" disabled-if-no-accounts ng-click="removeOwnerOffline()" class="btn btn-default" show-hide-by-connectivity="offline">
         Remove offline
       </button>
@@ -19,18 +45,9 @@
       <button type="button" disabled-if-no-accounts ng-click="addOwner()" class="btn btn-default">
         Add
       </button>
-      <button type="button" ng-click="hideOwners=true" class="btn btn-default" ng-hide="hideOwners">
-        <span class="glyphicon glyphicon-menu-up" aria-hidden="true"></span>
-      </button>
-      <button type="button" ng-click="hideOwners=false" class="btn btn-default" ng-show="hideOwners">
-        <span class="glyphicon glyphicon-menu-down" aria-hidden="true"></span>
-      </button>
     </div>
-    <h4>
-      Owners
-    </h4>
   </div>
-  <table class="table table-hover table-bordered table-striped" uib-collapse="hideOwners">
+  <table class="table table-hover table-bordered table-striped">
     <thead>
       <tr>
         <th>
@@ -72,24 +89,18 @@
   </table>
 </div>
 <!-- Tokens panel -->
-<div class="panel panel-default">
+<div class="panel panel-default" uib-collapse="hideTokens">
   <div class="panel-heading">
-    <div class="pull-right">
+    <h3>
+        Tokens
+    </h3>
+    <div>
       <button type="button" ng-click="addToken()" class="btn btn-default">
         Add
       </button>
-      <button type="button" ng-click="hideTokens=true" class="btn btn-default" ng-hide="hideTokens">
-        <span class="glyphicon glyphicon-menu-up" aria-hidden="true"></span>
-      </button>
-      <button type="button" ng-click="hideTokens=false" class="btn btn-default" ng-show="hideTokens">
-        <span class="glyphicon glyphicon-menu-down" aria-hidden="true"></span>
-      </button>
     </div>
-    <h4>
-      Tokens
-    </h4>
   </div>
-  <table class="table table-hover table-bordered table-striped" uib-collapse="hideTokens">
+  <table class="table table-hover table-bordered table-striped">
     <thead>
       <tr>
         <th>
@@ -144,7 +155,11 @@
 <!-- Multisig transactions panel -->
 <div class="panel panel-default">
   <div class="panel-heading">
-    <div class="pull-right form-inline">
+    <h3>
+        Multisig transactions
+    </h3>
+    
+    <div class="form-inline">
       <button type="button" class="btn btn-default" disabled-if-no-accounts
       ng-click="confirmMultisigTransactionOffline()" show-hide-by-connectivity="offline">
         Confirm offline
@@ -184,9 +199,6 @@
         </option>
       </select>
     </div>
-    <h4>
-      Multisig transactions
-    </h4>
   </div>
   <table class="table table-hover table-bordered table-striped">
     <thead>
@@ -311,6 +323,6 @@
     No multisig transactions. Send a multisig transaction <a href="" ng-click="addTransaction()">now</a>.
   </div>
   <div class="panel-footer">
-    <ul uib-pagination total-items="totalItems" ng-model="currentPage" ng-change="updateTransactions()" items-per-page="itemsPerPage"></ul>
+    <ul uib-pagination max-size="5" total-items="totalItems" ng-model="currentPage" ng-change="updateTransactions()" items-per-page="itemsPerPage"></ul>
   </div>
 </div>

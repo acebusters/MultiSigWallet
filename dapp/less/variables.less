@@ -13,45 +13,51 @@
 @gnosis-ultra-light-blue:      #00a6c4;
 @gnosis-light-grey:            #b3c3ce;
 
+@leapdao-background:           #fff;
+@leapdao-secondary-bg:         #fff;
+@leapdao-bg-accent:            #fff;
+@leapdao-foreground:           #000;
+@leapdao-button:               rgb(64, 253, 169);
+@leapdao-button-active:        rgb(163, 253, 143);
 
 // Background
-@gnosis-body-bg: @gnosis-blue;
+@gnosis-body-bg:                @leapdao-background;
 
 // Page header
-@gnosis-page-header-border-color:       @gnosis-light-blue;
+@gnosis-page-header-border-color: @gnosis-light-blue;
 
 // Links & Text
-@gnosis-text-color:                     @gnosis-light-grey;
-@gnosis-link-color: @gnosis-extreme-light-blue;
-@gnosis-link-hover-color: @gnosis-ultra-light-blue;
+@gnosis-text-color:             #000;
+@gnosis-link-color:             #000;
+@gnosis-link-hover-color:       #000;
 
 // Button
-@gnosis-btn-default-bg:                 @gnosis-light-blue;
+@gnosis-btn-default-bg:                 @leapdao-background;
 
 // Pagination
-@gnosis-pagination-bg:                  @gnosis-light-blue;
-@gnosis-pagination-hover-bg: @gnosis-extreme-dark-blue;
-@gnosis-pagination-active-bg: @gnosis-extreme-dark-blue;
-@gnosis-pagination-disabled-bg: @gnosis-extreme-dark-blue;
+@gnosis-pagination-bg:                  @leapdao-background;
+@gnosis-pagination-hover-bg:            @leapdao-button-active;
+@gnosis-pagination-active-bg:           @leapdao-button-active;
+@gnosis-pagination-disabled-bg:         darken(@leapdao-background, 10%);
 
 // Input
-@gnosis-input-bg: @gnosis-light-blue;
+@gnosis-input-bg:          @leapdao-background;
 @gnosis-input-bg-disabled: @gnosis-extreme-dark-blue;
 
 // Dropdown
-@gnosis-dropdown-bg: @gnosis-very-dark-blue;
+@gnosis-dropdown-bg:               @leapdao-background;
 @gnosis-dropdown-link-color:       @gnosis-link-color;
 @gnosis-dropdown-link-hover-color: @gnosis-ultra-light-blue;
-@gnosis-dropdown-link-hover-bg: @gnosis-light-blue;
+@gnosis-dropdown-link-hover-bg:    @gnosis-light-blue;
 
 // Modal
 @gnosis-modal-content-bg:          @gnosis-blue;
 @gnosis-modal-header-border-color: @gnosis-light-blue;
 
 // Nav
-@gnosis-navbar-default-color:       @gnosis-light-grey;
-@gnosis-navbar-default-bg: @gnosis-very-dark-blue;
-@gnosis-navbar-default-border:      @gnosis-light-blue;
+@gnosis-navbar-default-color:       @leapdao-foreground;
+@gnosis-navbar-default-bg:          @leapdao-background;
+@gnosis-navbar-default-border:      @leapdao-foreground;
 
 // Navbar links
 @gnosis-navbar-default-link-color:            @gnosis-link-color;
@@ -59,19 +65,19 @@
 @gnosis-navbar-default-link-active-color: @gnosis-ultra-light-blue;
 
 // Panel
-@gnosis-panel-bg:                       @gnosis-blue;
+@gnosis-panel-bg:                       @leapdao-background;
 @gnosis-panel-inner-border: @gnosis-very-light-blue;
 @gnosis-panel-footer-bg: @gnosis-very-light-blue;
 @gnosis-panel-default-border: @gnosis-very-light-blue;
-@gnosis-panel-default-heading-bg: @gnosis-very-light-blue;
+@gnosis-panel-default-heading-bg:       @leapdao-background;
 @gnosis-panel-default-text:             @gnosis-light-grey;
 
 // Table
-@gnosis-table-bg:                       transparent;
-@gnosis-table-bg-accent: @gnosis-dark-blue;
-@gnosis-table-bg-hover: @gnosis-very-dark-blue;
+@gnosis-table-bg:                       @leapdao-background;
+@gnosis-table-bg-accent:                @leapdao-background;
+@gnosis-table-bg-hover:                 @leapdao-secondary-bg;
 @gnosis-table-bg-active:                @gnosis-table-bg-hover;
-@gnosis-table-border-color: @gnosis-very-light-blue;
+@gnosis-table-border-color:             @gnosis-very-light-blue;
 
 
 //== Colors
@@ -113,7 +119,31 @@
 //
 //## Font, line-height, and color for body text, headings, and more.
 
-@font-family-sans-serif:  "Helvetica Neue", Helvetica, Arial, sans-serif;
+@font-face {
+  font-family: 'Chivo';
+  src: url('../fonts/chivo-black-webfont.woff2') format('woff2');
+  font-weight: 900;
+  font-style: normal;
+  font-display: fallback;
+}
+
+@font-face {
+  font-family: 'Chivo';
+  src: url('../fonts/chivo-bold-webfont.woff2') format('woff2');
+  font-weight: bold;
+  font-style: normal;
+  font-display: fallback;
+}
+
+@font-face {
+  font-family: 'Chivo';
+  src: url('../fonts/chivo-regular-webfont.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+  font-display: fallback;
+}
+
+@font-family-sans-serif:  "Chivo", Helvetica, Arial, sans-serif;
 @font-family-serif:       Georgia, "Times New Roman", Times, serif;
 //** Default monospace fonts for `<code>`, `<kbd>`, and `<pre>`.
 @font-family-monospace:   Menlo, Monaco, Consolas, "Courier New", monospace;
@@ -200,14 +230,14 @@
 //** Default background color used for all tables.
 @table-bg:                      @gnosis-table-bg;
 //** Background color used for `.table-striped`.
-@table-bg-accent:               @gnosis-table-bg-accent;
+@table-bg-accent:               @leapdao-bg-accent;
 //** Background color used for `.table-hover`.
 @table-bg-hover:                @gnosis-table-bg-hover;
 @table-bg-active:               @gnosis-table-bg-active;
 
 //** Border color for table and cell borders.
-@table-border-color:            @gnosis-table-border-color;
-
+@table-border-color:            @leapdao-background;
+@table-border-row-color:        @leapdao-bg-accent;
 
 //== Buttons
 //
@@ -215,27 +245,27 @@
 
 @btn-font-weight:                normal;
 
-@btn-default-color:              #fff;
+@btn-default-color:              #000;
 @btn-default-bg:                 @gnosis-btn-default-bg;
-@btn-default-border:             darken(@btn-default-bg, 5%);
+@btn-default-border:             darken(@btn-default-bg, 15%);
 
-@btn-primary-color:              #fff;
-@btn-primary-bg:                 @brand-primary;
+@btn-primary-color:              #000;
+@btn-primary-bg:                 @leapdao-button;
 @btn-primary-border:             darken(@btn-primary-bg, 5%);
 
-@btn-success-color:              #fff;
+@btn-success-color:              #000;
 @btn-success-bg:                 @brand-success;
 @btn-success-border:             darken(@btn-success-bg, 5%);
 
-@btn-info-color:                 #fff;
+@btn-info-color:                 #000;
 @btn-info-bg:                    @brand-info;
 @btn-info-border:                darken(@btn-info-bg, 5%);
 
-@btn-warning-color:              #fff;
+@btn-warning-color:              #000;
 @btn-warning-bg:                 @brand-warning;
 @btn-warning-border:             darken(@btn-warning-bg, 5%);
 
-@btn-danger-color:               #fff;
+@btn-danger-color:               #000;
 @btn-danger-bg:                  @brand-danger;
 @btn-danger-border:              darken(@btn-danger-bg, 5%);
 
@@ -254,10 +284,10 @@
 //** `<input>` background color
 @input-bg: @gnosis-input-bg;
 //** `<input disabled>` background color
-@input-bg-disabled:              @gnosis-input-bg-disabled;
+@input-bg-disabled:              darken(@gnosis-input-bg, 10%);
 
 //** Text color for `<input>`s
-@input-color:                    #fff;
+@input-color:                    #000;
 //** `<input>` border color
 @input-border:                   darken(@btn-default-bg, 5%);
 
@@ -431,13 +461,13 @@
 @navbar-height:                    50px;
 @navbar-margin-bottom:             @line-height-computed;
 @navbar-border-radius:             @border-radius-base;
-@navbar-padding-horizontal:        floor((@grid-gutter-width / 2));
+@navbar-padding-horizontal:        10px;
 @navbar-padding-vertical:          ((@navbar-height - @line-height-computed) / 2);
 @navbar-collapse-max-height:       340px;
 
 @navbar-default-color:            @gnosis-navbar-default-color;
 @navbar-default-bg:               @gnosis-navbar-default-bg;
-@navbar-default-border:           @gnosis-navbar-default-border;
+@navbar-default-border:           @leapdao-background;
 
 // Navbar links
 @navbar-default-link-hover-bg:             transparent;
@@ -490,7 +520,7 @@
 //##
 
 //=== Shared nav styles
-@nav-link-padding:                          10px 15px;
+@nav-link-padding:                          10px 10px;
 @nav-link-hover-bg:                         @gray-lighter;
 
 @nav-disabled-link-color:                   @gray-light;
@@ -518,11 +548,11 @@
 //
 //##
 
-@pagination-color:                     #fff;
+@pagination-color:                     #000;
 @pagination-bg:                        @gnosis-pagination-bg;
 @pagination-border:                    darken(@pagination-bg, 5%);
 
-@pagination-hover-color:               #fff;
+@pagination-hover-color:               #000;
 @pagination-hover-bg:                  @gnosis-pagination-hover-bg;
 @pagination-hover-border:              darken(@pagination-hover-bg, 5%);
 
@@ -668,7 +698,7 @@
 @modal-title-line-height:     @line-height-base;
 
 //** Background color of modal content area
-@modal-content-bg:                             @gnosis-modal-content-bg;
+@modal-content-bg:                             @leapdao-background;
 //** Modal content border color
 @modal-content-border-color:                   rgba(0,0,0,.2);
 //** Modal content border color **for IE8**
@@ -782,13 +812,13 @@
 
 //** Border color for elements within panels
 @panel-inner-border:          @gnosis-panel-inner-border;
-@panel-footer-bg:             @gnosis-panel-footer-bg;
+@panel-footer-bg:             @gnosis-panel-bg;
 
-@panel-default-text:          @gnosis-panel-default-text;
-@panel-default-border:        @gnosis-panel-default-border;
-@panel-default-heading-bg:    @gnosis-panel-default-heading-bg;
+@panel-default-text:          @leapdao-foreground;
+@panel-default-border:        @leapdao-background;
+@panel-default-heading-bg:    @leapdao-secondary-bg;
 
-@panel-primary-text:          #fff;
+@panel-primary-text:          @leapdao-foreground;
 @panel-primary-border:        @brand-primary;
 @panel-primary-heading-bg:    @brand-primary;
 
@@ -932,7 +962,7 @@
 //** Blockquote border color
 @blockquote-border-color:     @gray-lighter;
 //** Page header border color
-@page-header-border-color:    @gnosis-page-header-border-color;
+@page-header-border-color:    @leapdao-background;
 //** Width of horizontal description list titles
 @dl-horizontal-offset:        @component-offset-horizontal;
 //** Point at which .dl-horizontal becomes horizontal
