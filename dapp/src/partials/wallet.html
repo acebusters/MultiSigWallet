@@ -1,9 +1,11 @@
 <div class="page-header">
   <h1>
-    {{wallet.name}} {{balance|ether}}
+    {{wallet.name}}
   </h1>
   <h5 class="grey">{{wallet.address}}</h5>
-</div>
+  <div>{{balance|ether}}</div>
+  <div>{{wallet.tokens['0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359']|token}}</div>
+</div>  
 <!-- Owners panel -->
 <div class="panel panel-default">
   <div class="panel-heading">
