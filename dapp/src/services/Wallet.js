@@ -55,9 +55,10 @@
               .get(txDefault.websites.ethGasStation)
               .then(
                 function(response) {
-                  resolve(response.data.standard)
+                  // add extra 0.5 gwei on top to allow some breathing room
+                  resolve((response.data.average / 10 + 0.5) * 10**9)
                 },
-                function (error) {
+                function (error, data) {
                   // Get gas price from Ethereum Node
                   Web3Service.web3.eth.getGasPrice(function (g_error, g_result) {
                     if (g_error) {

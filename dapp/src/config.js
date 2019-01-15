@@ -24,6 +24,7 @@ var txDefaultOrig =
   transactionChecker: {
     checkInterval: 15000
   },
+  ethGasStation: "https://ethgasstation.info/json/ethgasAPI.json",
   wallet: "injected",
   defaultChainID: null,
   // Mainnet
