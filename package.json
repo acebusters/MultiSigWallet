@@ -7,7 +7,7 @@
     "test": "sh truffle_test_runner.sh",
     "install": "cd dapp && npm install",
     "start": "cd dapp && npm start",
-    "deploy": "aws s3 sync ./dapp s3://wallet.leapdao.org/ --exclude 'node_modules/electron*' --exclude 'tests/*' --exclude 'less/*' --exclude='node_modules/eslint*' --acl public-read && aws cloudfront create-invalidation --distribution-id E34XDT2R61BNNZ --paths '/*'"
+    "deploy": "aws s3 sync ./dapp/src s3://wallet.leapdao.org/ --acl public-read && aws cloudfront create-invalidation --distribution-id E34XDT2R61BNNZ --paths '/*'"
   },
   "repository": {
     "type": "git",
