@@ -695,7 +695,7 @@ angular.module('multiSigWeb').run(['$templateCache', function($templateCache) {
     "        </td>\n" +
     "        <td>\n" +
     "          <div uib-popover=\"{{transactions[txId].to}}\" popover-enable=\"'true'\" popover-trigger=\"'mouseenter'\">\n" +
-    "            <button type=\"button\" class=\"btn btn-default btn-sm\"\n" +
+    "            <button type=\"button\" class=\"btn btn-default btn-sm btn-icon\"\n" +
     "              data-clipboard-text=\"{{transactions[txId].to}}\"\n" +
     "              ngclipboard>\n" +
     "              <span class=\"glyphicon glyphicon-copy\"></span>\n" +
@@ -2441,7 +2441,7 @@ angular.module('multiSigWeb').run(['$templateCache', function($templateCache) {
     "      <label for=\"destination\">\n" +
     "        Destination\n" +
     "        <!-- pick address from address book -->\n" +
-    "        <button class=\"btn btn-default btn-sm\" ng-click=\"openAddressBook()\">\n" +
+    "        <button class=\"btn btn-default btn-sm btn-icon\" ng-click=\"openAddressBook()\">\n" +
     "          <i class=\"fa fa-address-book\" title=\"Address book\"></i>\n" +
     "        </button>\n" +
     "      </label>\n" +
@@ -2757,7 +2757,7 @@ angular.module('multiSigWeb').run(['$templateCache', function($templateCache) {
     "      <label for=\"destination\">\n" +
     "        Destination\n" +
     "        <!-- pick address from address book -->\n" +
-    "        <button class=\"btn btn-default btn-sm\" ng-click=\"openAddressBook()\">\n" +
+    "        <button class=\"btn btn-default btn-sm btn-icon\" ng-click=\"openAddressBook()\">\n" +
     "          <i class=\"fa fa-address-book\" title=\"Address book\"></i>\n" +
     "        </button>\n" +
     "      </label>\n" +
@@ -2890,7 +2890,7 @@ angular.module('multiSigWeb').run(['$templateCache', function($templateCache) {
     "      <label for=\"address\">\n" +
     "        Destination\n" +
     "        <!-- pick address from address book -->\n" +
-    "        <button class=\"btn btn-default btn-sm\" ng-click=\"openAddressBook()\">\n" +
+    "        <button class=\"btn btn-default btn-sm btn-icon\" ng-click=\"openAddressBook()\">\n" +
     "            <i class=\"fa fa-address-book\" title=\"Address book\"></i>\n" +
     "          </button>          \n" +
     "      </label>\n" +

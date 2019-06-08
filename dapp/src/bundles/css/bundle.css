@@ -216,6 +216,10 @@ nav {
 .modal-footer {
   border: 0 !important;
 }
+
+.btn-icon {
+  border: 0 !important;
+}
 /*!
  * Bootstrap v3.3.7 (http://getbootstrap.com)
  * Copyright 2011-2016 Twitter, Inc.
