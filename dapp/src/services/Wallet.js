@@ -52,7 +52,7 @@
         return $q(
           function(resolve, reject){
             $http
-              .get(txDefault.websites.ethGasStation)
+              .get(txDefault.ethGasStation)
               .then(
                 function(response) {
                   // add extra 0.5 gwei on top to allow some breathing room
