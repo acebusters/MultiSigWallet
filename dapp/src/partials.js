@@ -472,7 +472,7 @@ angular.module('multiSigWeb').run(['$templateCache', function($templateCache) {
     "  </div>\n" +
     "  <div class=\"button-panel\">\n" +
     "    <button type=\"button\" class=\"btn btn-primary btn-lg\" disabled-if-no-accounts\n" +
-    "      ng-click=\"withdrawToken(wallet.tokens['0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359'])\">\n" +
+    "      ng-click=\"withdrawToken(wallet.tokens['0x89d24A6b4CcB1B6fAA2625fE562bDD9a23260359'])\">\n" +
     "      Add DAI tx\n" +
     "    </button>\n" +
     "    <button type=\"button\" class=\"btn btn-primary btn-lg\" disabled-if-no-accounts\n" +
@@ -491,7 +491,7 @@ angular.module('multiSigWeb').run(['$templateCache', function($templateCache) {
     "  <div>Balance:</div>\n" +
     "  <div>\n" +
     "    {{balance|ether}}<br/>\n" +
-    "    {{wallet.tokens['0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359']|token}}\n" +
+    "    {{wallet.tokens['0x89d24A6b4CcB1B6fAA2625fE562bDD9a23260359']|token}}\n" +
     "  </div>\n" +
     "</div>  \n" +
     "<!-- Owners panel -->\n" +
