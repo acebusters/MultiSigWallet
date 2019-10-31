@@ -80,8 +80,8 @@
                   // Check if the owners are in the wallet.owners object
                   var walletOwnerskeys = $scope.wallet.owners ? Object.keys($scope.wallet.owners) : [];
 
-                  if (!$scope.wallet.owners) {   
-                    $scope.wallet.owners = {};  
+                  if (!$scope.wallet.owners) {
+                    $scope.wallet.owners = {};
                     $scope.owners.forEach(function (item, index) {
                       $scope.wallet.owners[item] = {
                         'name': 'Owner ' + (index + 1),
@@ -90,7 +90,7 @@
                       if (index == $scope.owners.length-1) { // last item
                         Wallet.updateWallet($scope.wallet);
                       }
-                    });              
+                    });
                   } else {
                     for (var x = 0; x < $scope.owners.length; x++) {
                       // If owner not in list
@@ -415,7 +415,7 @@
         /*$scope.getOwners = function () {
           var batch = Web3Service.web3.createBatch();
           $scope.owners = [];
-  
+
           function assignOwner (e, owner) {
             if (owner) {
               $scope.$apply(function () {
@@ -423,7 +423,7 @@
               });
             }
           }
-  
+
           for(var i=0; i<$scope.ownersNum; i++){
             // Get owners
             batch.add(
@@ -811,6 +811,19 @@
               }
             },
             controller: 'editABICtrl'
+          });
+        };
+
+        $scope.payoutBounty = function () {
+          $uibModal.open({
+            templateUrl: 'partials/modals/payoutBounty.html',
+            size: 'md',
+            resolve: {
+              wallet: function () {
+                return $scope.wallet;
+              }
+            },
+            controller: 'payoutBountyCtrl'
           });
         };
       });

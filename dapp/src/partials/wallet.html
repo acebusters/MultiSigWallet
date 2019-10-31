@@ -7,6 +7,10 @@
   </div>
   <div class="button-panel">
     <button type="button" class="btn btn-primary btn-lg" disabled-if-no-accounts
+      ng-click="payoutBounty()">
+      Payout Bounty
+    </button>
+    <button type="button" class="btn btn-primary btn-lg" disabled-if-no-accounts
       ng-click="withdrawToken(wallet.tokens['0x89d24A6b4CcB1B6fAA2625fE562bDD9a23260359'])">
       Add DAI tx
     </button>
@@ -28,7 +32,7 @@
     {{balance|ether}}<br/>
     {{wallet.tokens['0x89d24A6b4CcB1B6fAA2625fE562bDD9a23260359']|token}}
   </div>
-</div>  
+</div>
 <!-- Owners panel -->
 <div class="panel panel-default" uib-collapse="hideOwners">
   <div class="panel-heading">
@@ -158,7 +162,7 @@
     <h3>
         Multisig transactions
     </h3>
-    
+
     <div class="form-inline">
       <button type="button" class="btn btn-default" disabled-if-no-accounts
       ng-click="confirmMultisigTransactionOffline()" show-hide-by-connectivity="offline">

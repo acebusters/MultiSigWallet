@@ -1,0 +1,77 @@
+<div class="modal-header">
+  <h3 class="modal-title">
+    Payout Bounty
+  </h3>
+</div>
+<form name="form" class="form">
+  <div class="modal-body">
+    <div class="form-control-static">
+      <div class="form-group">
+        <label for="gardenerAddress">
+          Gardener Address
+          <!-- pick address from address book -->
+          <button class="btn btn-default btn-sm btn-icon" ng-click="openAddressBook('gardener')">
+            <i class="fa fa-address-book" title="Address book"></i>
+          </button>
+        </label>
+        <input id="gardenerAddress" type="text" class="form-control" ng-model="gardener.address" ng-minlength="40" required>
+      </div>
+      <div class="form-group">
+        <label for="gardenerAmount">Gardener Amount (DAI)</label>
+        <input id="gardenerAmount" type="number" class="form-control" ng-model="gardener.amount" ng-min="1" max="999999999999999" required>
+      </div>
+    </div>
+
+    <div class="form-control-static" ng-show="showWorkerField">
+      <div class="form-group">
+        <label for="workerAddress">
+          Worker Address
+          <!-- pick address from address book -->
+          <button class="btn btn-default btn-sm btn-icon" ng-click="openAddressBook('worker')">
+            <i class="fa fa-address-book" title="Address book"></i>
+          </button>
+        </label>
+        <input id="workerAddress" type="text" class="form-control" ng-model="worker.address" ng-minlength="40" required>
+      </div>
+      <div class="form-group">
+        <label for="workerAmount">Worker Amount (DAI)</label>
+        <input id="workerAmount" type="number" class="form-control" ng-model="worker.amount" ng-min="0" max="999999999999999" required>
+      </div>
+    </div>
+
+    <div class="form-control-static" ng-show="showReviewerField">
+      <div class="form-group">
+        <label for="reviewerAddress">
+          Reviewer Address
+          <!-- pick address from address book -->
+          <button class="btn btn-default btn-sm btn-icon" ng-click="openAddressBook('reviewer')">
+            <i class="fa fa-address-book" title="Address book"></i>
+          </button>
+        </label>
+        <input id="reviewerAddress" type="text" class="form-control" ng-model="reviewer.address" ng-minlength="40" required>
+      </div>
+      <div class="form-group">
+        <label for="reviewerAmount">Reviewer Amount (DAI)</label>
+        <input id="reviewerAmount" type="number" class="form-control" ng-model="reviewer.amount" ng-min="0" max="999999999999999" required>
+      </div>
+    </div>
+
+    <button type="button" ng-click="toggleWorkerField()" class="btn btn-default" show-hide-by-connectivity="online">
+      <i ng-class="{'fa fa-plus': !showWorkerField, 'fa fa-close': showWorkerField}" title="Toggle Worker Field"></i>
+      {{showWorkerField ? 'Hide' : 'Add'}} Worker
+    </button>
+    <button type="button" ng-click="toggleReviewerField()"
+      class="btn btn-default" show-hide-by-connectivity="online">
+      <i ng-class="{'fa fa-plus': !showReviewerField, 'fa fa-close': showReviewerField}" title="Toggle Reviewer Field"></i>
+      {{showReviewerField ? 'Hide' : 'Add'}} Reviewer
+    </button>
+  </div>
+  <div class="modal-footer">
+    <button type="button" ng-click="payout()" class="btn btn-default" ng-disabled="form.$invalid" show-hide-by-connectivity="online">
+      Payout
+    </button>
+    <button type="button" ng-click="cancel()" class="btn btn-danger">
+      Cancel
+    </button>
+  </div>
+</form>
