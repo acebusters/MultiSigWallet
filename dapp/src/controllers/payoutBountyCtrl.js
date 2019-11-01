@@ -2,7 +2,7 @@
   function () {
     angular
       .module("multiSigWeb")
-      .controller("payoutBountyCtrl", function ($scope, Wallet, Token, Transaction, Utils, wallet, $uibModal, $uibModalInstance, Web3Service) {
+      .controller("payoutBountyCtrl", function ($scope, Wallet, Transaction, Utils, wallet, $uibModal, $uibModalInstance, Web3Service) {
 
         $scope.wallet = wallet;
         $scope.showWorkerField = false;
@@ -15,12 +15,12 @@
         $scope.worker = {
           address: Web3Service.coinbase,
           amount: 0,
-        };$scope.reviewer = {
+        };
+        $scope.reviewer = {
           address: Web3Service.coinbase,
           amount: 0,
         };
-
-        // console.log(abiJSON.payoutBounty.abi);
+        $scope.bountyId = ''
 
         /**
          * Opens the address book modal
@@ -91,22 +91,60 @@
         }
 
         $scope.payout = function () {
-          console.log('Payout', $scope.gardener);
-        };
+          // TODO: Add validations for valid checksum addresses of Worker & Reviewer
+          const { stripHexPrefix } = ethereumjs.Util;
+          const { toHex } = new Web3();
+          const _getInput = function (_address, _amount) {
+            const _amountHex = Utils.leftPad(stripHexPrefix(toHex(_amount * 10 ** 18)), 24);
+            return `0x${stripHexPrefix(_address)}${_amountHex}`
+          };
 
-        $scope.getNonce = function () {
-          var value = new Web3().toBigNumber($scope.amount).mul('1e' + $scope.token.decimals);
-          var data = Token.withdrawData(
-            $scope.token.address,
-            $scope.to,
-            new Web3().toBigNumber($scope.amount).mul('1e' + $scope.token.decimals)
+          const _gardener = _getInput($scope.gardener.address, $scope.gardener.amount);
+          const _worker = _getInput($scope.worker.address, $scope.worker.amount);
+          const _reviewer = _getInput($scope.reviewer.address, $scope.reviewer.amount);
+          const _bountyId = toHex($scope.bountyId.replace('github.com/leapdao', ''));
+
+          const contractAddress = '0x8B55748048414b09958398acDbb6021cf8B800D6'; // Rinkeby address
+          const contractInstance = Web3Service.web3.eth.contract(abiJSON.payoutBounty.abi).at(contractAddress);
+          const walletInstance = Web3Service.web3.eth.contract(Wallet.json.multiSigDailyLimit.abi).at($scope.wallet.address);
+
+          const data = contractInstance.payout.getData(
+            _gardener,
+            _worker,
+            _reviewer,
+            _bountyId
           );
-          Wallet.getNonce($scope.wallet.address, $scope.token.address, "0x0", data, function (e, nonce) {
+
+          // Get nonce
+          Wallet.getTransactionCount($scope.wallet.address, true, true, function (e, count) {
             if (e) {
               Utils.dangerAlert(e);
             } else {
-              $uibModalInstance.close();
-              Utils.nonce(nonce);
+              Web3Service.configureGas(Wallet.txDefaults({ gas: 500000 }), function (gasOptions) {
+                walletInstance.submitTransaction(
+                  contractAddress,
+                  "0x0",
+                  data,
+                  count,
+                  Wallet.txDefaults({
+                    gas: gasOptions.gas,
+                    gasPrice: gasOptions.gasPrice
+                  }),
+                  function (e, tx) {
+                    if (e) {
+                      Utils.dangerAlert(e);
+                    } else {
+                      Utils.notification("Bounty payout transaction was sent.");
+                      $uibModalInstance.close();
+                      Transaction.add({
+                        txHash: tx,
+                        callback: function () {
+                          Utils.success("Bounty payout transaction was mined.");
+                        }
+                      });
+                    }
+                  });
+              });
             }
           }).call();
         };

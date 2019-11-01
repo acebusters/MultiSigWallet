@@ -56,6 +56,14 @@
       </div>
     </div>
 
+    <div class="form-control-static">
+      <div class="form-group">
+        <label for="bountyId">Bounty URL</label>
+        <input id="bountyId" type="text" class="form-control" ng-model="bountyId"
+          placeholder="https://github.com/leapdao/MultiSigWallet/issues/8" required>
+      </div>
+    </div>
+
     <button type="button" ng-click="toggleWorkerField()" class="btn btn-default" show-hide-by-connectivity="online">
       <i ng-class="{'fa fa-plus': !showWorkerField, 'fa fa-close': showWorkerField}" title="Toggle Worker Field"></i>
       {{showWorkerField ? 'Hide' : 'Add'}} Worker
@@ -67,7 +75,9 @@
     </button>
   </div>
   <div class="modal-footer">
-    <button type="button" ng-click="payout()" class="btn btn-default" ng-disabled="form.$invalid" show-hide-by-connectivity="online">
+    <button type="button" ng-click="payout()" class="btn btn-default"
+      disabled-if-invalid-address="{{gardener.address}}"
+      ng-disabled="form.$invalid" show-hide-by-connectivity="online">
       Payout
     </button>
     <button type="button" ng-click="cancel()" class="btn btn-danger">
