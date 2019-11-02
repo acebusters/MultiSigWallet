@@ -109,7 +109,7 @@
           const _gardener = _getInput($scope.gardener.address, $scope.gardener.amount, $scope.gardener.isRepOnly);
           const _worker = _getInput($scope.worker.address, $scope.worker.amount, $scope.worker.isRepOnly);
           const _reviewer = _getInput($scope.reviewer.address, $scope.reviewer.amount, $scope.reviewer.isRepOnly);
-          const _bountyId = toHex($scope.bountyId.replace('github.com/leapdao', ''));
+          const _bountyId = toHex($scope.bountyId.replace('https://github.com/leapdao', ''));
 
           const contractAddress = '0x8B55748048414b09958398acDbb6021cf8B800D6'; // Rinkeby address
           const contractInstance = Web3Service.web3.eth.contract(abiJSON.payoutBounty.abi).at(contractAddress);
