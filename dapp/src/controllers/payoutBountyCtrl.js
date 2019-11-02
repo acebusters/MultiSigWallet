@@ -94,7 +94,23 @@
         }
 
         $scope.payout = function () {
-          // TODO: Add validations for valid checksum addresses of Worker & Reviewer
+          if (!$scope.showWorkerField && !$scope.showReviewerField) {
+            Utils.dangerAlert('Please provide either worker or reviewer details to proceed');
+            return;
+          }
+
+          if (Web3Service.web3.isAddress($scope.worker.address)
+            || Web3Service.web3.isAddress(Web3Service.toChecksumAddress($scope.worker.address))) {
+            Utils.dangerAlert('Invalid worker address');
+            return;
+          }
+
+          if (Web3Service.web3.isAddress($scope.reviewer.address)
+            || Web3Service.web3.isAddress(Web3Service.toChecksumAddress($scope.reviewer.address))) {
+            Utils.dangerAlert('Invalid reviewer address');
+            return;
+          }
+
           const { stripHexPrefix } = ethereumjs.Util;
           const { toBigNumber, toHex } = new Web3();
           const _getInput = function (_address, _amount, _isRepOnly) {
@@ -115,12 +131,27 @@
           const contractInstance = Web3Service.web3.eth.contract(abiJSON.payoutBounty.abi).at(contractAddress);
           const walletInstance = Web3Service.web3.eth.contract(Wallet.json.multiSigDailyLimit.abi).at($scope.wallet.address);
 
-          const data = contractInstance.payout.getData(
-            _gardener,
-            _worker,
-            _reviewer,
-            _bountyId
-          );
+          let data;
+          if ($scope.showWorkerField && $scope.showReviewerField) {
+            data = contractInstance.payout.getData(
+              _gardener,
+              _worker,
+              _reviewer,
+              _bountyId
+            );
+          } else if ($scope.showWorkerField) {
+            data = contractInstance.payoutNoReviewer.getData(
+              _gardener,
+              _worker,
+              _bountyId
+            );
+          } else if ($scope.showReviewerField) {
+            data = contractInstance.payoutReviewedDelivery.getData(
+              _gardener,
+              _reviewer,
+              _bountyId
+            );
+          }
 
           // Get nonce
           Wallet.getTransactionCount($scope.wallet.address, true, true, function (e, count) {

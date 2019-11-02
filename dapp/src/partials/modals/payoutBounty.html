@@ -41,7 +41,8 @@
       </div>
       <div class="form-group">
         <label for="workerAmount">Worker Amount (DAI)</label>
-        <input id="workerAmount" type="number" class="form-control" ng-model="worker.amount" ng-min="0" max="999999999999999" required>
+        <input id="workerAmount" type="number" class="form-control" ng-model="worker.amount"
+          ng-min="{{showWorkerField ? 1 : 0}}" max="999999999999999" required>
       </div>
       <div class="checkbox">
         <label>
@@ -64,7 +65,8 @@
       </div>
       <div class="form-group">
         <label for="reviewerAmount">Reviewer Amount (DAI)</label>
-        <input id="reviewerAmount" type="number" class="form-control" ng-model="reviewer.amount" ng-min="0" max="999999999999999" required>
+        <input id="reviewerAmount" type="number" class="form-control" ng-model="reviewer.amount"
+          ng-min="{{showReviewerField ? 1 : 0}}" max="999999999999999" required>
       </div>
       <div class="checkbox">
         <label>
@@ -78,7 +80,7 @@
       <div class="form-group">
         <label for="bountyId">Bounty URL</label>
         <input id="bountyId" type="text" class="form-control" ng-model="bountyId"
-          placeholder="https://github.com/leapdao/MultiSigWallet/issues/8" required>
+          placeholder="https://github.com/leapdao/MultiSigWallet/issues/8" maxlength="58" required>
       </div>
     </div>
 
