@@ -11,14 +11,17 @@
         $scope.gardener = {
           address: Web3Service.coinbase,
           amount: 1,
+          isRepOnly: false
         };
         $scope.worker = {
           address: Web3Service.coinbase,
           amount: 0,
+          isRepOnly: false
         };
         $scope.reviewer = {
           address: Web3Service.coinbase,
           amount: 0,
+          isRepOnly: false
         };
         $scope.bountyId = ''
 
@@ -93,15 +96,19 @@
         $scope.payout = function () {
           // TODO: Add validations for valid checksum addresses of Worker & Reviewer
           const { stripHexPrefix } = ethereumjs.Util;
-          const { toHex } = new Web3();
-          const _getInput = function (_address, _amount) {
-            const _amountHex = Utils.leftPad(stripHexPrefix(toHex(_amount * 10 ** 18)), 24);
+          const { toBigNumber, toHex } = new Web3();
+          const _getInput = function (_address, _amount, _isRepOnly) {
+            const _amountBN = toBigNumber(_amount * 10 ** 18);
+            const _amountHex = Utils.leftPad(
+              stripHexPrefix(toHex(_isRepOnly ? _amountBN.add(1).toString() : _amountBN.toString())),
+              24
+            );
             return `0x${stripHexPrefix(_address)}${_amountHex}`
           };
 
-          const _gardener = _getInput($scope.gardener.address, $scope.gardener.amount);
-          const _worker = _getInput($scope.worker.address, $scope.worker.amount);
-          const _reviewer = _getInput($scope.reviewer.address, $scope.reviewer.amount);
+          const _gardener = _getInput($scope.gardener.address, $scope.gardener.amount, $scope.gardener.isRepOnly);
+          const _worker = _getInput($scope.worker.address, $scope.worker.amount, $scope.worker.isRepOnly);
+          const _reviewer = _getInput($scope.reviewer.address, $scope.reviewer.amount, $scope.reviewer.isRepOnly);
           const _bountyId = toHex($scope.bountyId.replace('github.com/leapdao', ''));
 
           const contractAddress = '0x8B55748048414b09958398acDbb6021cf8B800D6'; // Rinkeby address

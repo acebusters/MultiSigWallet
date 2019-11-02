@@ -20,6 +20,12 @@
         <label for="gardenerAmount">Gardener Amount (DAI)</label>
         <input id="gardenerAmount" type="number" class="form-control" ng-model="gardener.amount" ng-min="1" max="999999999999999" required>
       </div>
+      <div class="checkbox">
+        <label>
+          <input type="checkbox" ng-model="gardener.isRepOnly">
+          Reputation only
+        </label>
+      </div>
     </div>
 
     <div class="form-control-static" ng-show="showWorkerField">
@@ -37,6 +43,12 @@
         <label for="workerAmount">Worker Amount (DAI)</label>
         <input id="workerAmount" type="number" class="form-control" ng-model="worker.amount" ng-min="0" max="999999999999999" required>
       </div>
+      <div class="checkbox">
+        <label>
+          <input type="checkbox" ng-model="worker.isRepOnly">
+          Reputation only
+        </label>
+      </div>
     </div>
 
     <div class="form-control-static" ng-show="showReviewerField">
@@ -53,6 +65,12 @@
       <div class="form-group">
         <label for="reviewerAmount">Reviewer Amount (DAI)</label>
         <input id="reviewerAmount" type="number" class="form-control" ng-model="reviewer.amount" ng-min="0" max="999999999999999" required>
+      </div>
+      <div class="checkbox">
+        <label>
+          <input type="checkbox" ng-model="reviewer.isRepOnly">
+          Reputation only
+        </label>
       </div>
     </div>
 
