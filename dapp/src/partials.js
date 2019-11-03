@@ -472,6 +472,10 @@ angular.module('multiSigWeb').run(['$templateCache', function($templateCache) {
     "  </div>\n" +
     "  <div class=\"button-panel\">\n" +
     "    <button type=\"button\" class=\"btn btn-primary btn-lg\" disabled-if-no-accounts\n" +
+    "      ng-click=\"payoutBounty()\">\n" +
+    "      Payout Bounty\n" +
+    "    </button>\n" +
+    "    <button type=\"button\" class=\"btn btn-primary btn-lg\" disabled-if-no-accounts\n" +
     "      ng-click=\"withdrawToken(wallet.tokens['0x89d24A6b4CcB1B6fAA2625fE562bDD9a23260359'])\">\n" +
     "      Add DAI tx\n" +
     "    </button>\n" +
@@ -493,7 +497,7 @@ angular.module('multiSigWeb').run(['$templateCache', function($templateCache) {
     "    {{balance|ether}}<br/>\n" +
     "    {{wallet.tokens['0x89d24A6b4CcB1B6fAA2625fE562bDD9a23260359']|token}}\n" +
     "  </div>\n" +
-    "</div>  \n" +
+    "</div>\n" +
     "<!-- Owners panel -->\n" +
     "<div class=\"panel panel-default\" uib-collapse=\"hideOwners\">\n" +
     "  <div class=\"panel-heading\">\n" +
@@ -623,7 +627,7 @@ angular.module('multiSigWeb').run(['$templateCache', function($templateCache) {
     "    <h3>\n" +
     "        Multisig transactions\n" +
     "    </h3>\n" +
-    "    \n" +
+    "\n" +
     "    <div class=\"form-inline\">\n" +
     "      <button type=\"button\" class=\"btn btn-default\" disabled-if-no-accounts\n" +
     "      ng-click=\"confirmMultisigTransactionOffline()\" show-hide-by-connectivity=\"offline\">\n" +
@@ -1952,6 +1956,87 @@ angular.module('multiSigWeb').run(['$templateCache', function($templateCache) {
     "      Sign deployment with factory offline\n" +
     "    </button>\n" +
     "    <button class=\"btn btn-danger\" type=\"button\" ng-click=\"cancel()\">\n" +
+    "      Cancel\n" +
+    "    </button>\n" +
+    "  </div>\n" +
+    "</form>\n"
+  );
+
+
+  $templateCache.put('src/partials/modals/payoutBounty.html',
+    "<div class=\"modal-header\">\n" +
+    "  <h3 class=\"modal-title\">\n" +
+    "    Payout Bounty\n" +
+    "  </h3>\n" +
+    "</div>\n" +
+    "<form name=\"form\" class=\"form\">\n" +
+    "  <div class=\"modal-body\">\n" +
+    "    <div class=\"form-control-static\">\n" +
+    "      <div class=\"form-group\">\n" +
+    "        <label for=\"gardenerAddress\">\n" +
+    "          Gardener Address\n" +
+    "          <!-- pick address from address book -->\n" +
+    "          <button class=\"btn btn-default btn-sm btn-icon\" ng-click=\"openAddressBook('gardener')\">\n" +
+    "            <i class=\"fa fa-address-book\" title=\"Address book\"></i>\n" +
+    "          </button>\n" +
+    "        </label>\n" +
+    "        <input id=\"gardenerAddress\" type=\"text\" class=\"form-control\" ng-model=\"gardener.address\" ng-minlength=\"40\" required>\n" +
+    "      </div>\n" +
+    "      <div class=\"form-group\">\n" +
+    "        <label for=\"gardenerAmount\">Gardener Amount (DAI)</label>\n" +
+    "        <input id=\"gardenerAmount\" type=\"number\" class=\"form-control\" ng-model=\"gardener.amount\" ng-min=\"1\" max=\"999999999999999\" required>\n" +
+    "      </div>\n" +
+    "    </div>\n" +
+    "\n" +
+    "    <div class=\"form-control-static\" ng-show=\"showWorkerField\">\n" +
+    "      <div class=\"form-group\">\n" +
+    "        <label for=\"workerAddress\">\n" +
+    "          Worker Address\n" +
+    "          <!-- pick address from address book -->\n" +
+    "          <button class=\"btn btn-default btn-sm btn-icon\" ng-click=\"openAddressBook('worker')\">\n" +
+    "            <i class=\"fa fa-address-book\" title=\"Address book\"></i>\n" +
+    "          </button>\n" +
+    "        </label>\n" +
+    "        <input id=\"workerAddress\" type=\"text\" class=\"form-control\" ng-model=\"worker.address\" ng-minlength=\"40\" required>\n" +
+    "      </div>\n" +
+    "      <div class=\"form-group\">\n" +
+    "        <label for=\"workerAmount\">Worker Amount (DAI)</label>\n" +
+    "        <input id=\"workerAmount\" type=\"number\" class=\"form-control\" ng-model=\"worker.amount\" ng-min=\"0\" max=\"999999999999999\" required>\n" +
+    "      </div>\n" +
+    "    </div>\n" +
+    "\n" +
+    "    <div class=\"form-control-static\" ng-show=\"showReviewerField\">\n" +
+    "      <div class=\"form-group\">\n" +
+    "        <label for=\"reviewerAddress\">\n" +
+    "          Reviewer Address\n" +
+    "          <!-- pick address from address book -->\n" +
+    "          <button class=\"btn btn-default btn-sm btn-icon\" ng-click=\"openAddressBook('reviewer')\">\n" +
+    "            <i class=\"fa fa-address-book\" title=\"Address book\"></i>\n" +
+    "          </button>\n" +
+    "        </label>\n" +
+    "        <input id=\"reviewerAddress\" type=\"text\" class=\"form-control\" ng-model=\"reviewer.address\" ng-minlength=\"40\" required>\n" +
+    "      </div>\n" +
+    "      <div class=\"form-group\">\n" +
+    "        <label for=\"reviewerAmount\">Reviewer Amount (DAI)</label>\n" +
+    "        <input id=\"reviewerAmount\" type=\"number\" class=\"form-control\" ng-model=\"reviewer.amount\" ng-min=\"0\" max=\"999999999999999\" required>\n" +
+    "      </div>\n" +
+    "    </div>\n" +
+    "\n" +
+    "    <button type=\"button\" ng-click=\"toggleWorkerField()\" class=\"btn btn-default\" show-hide-by-connectivity=\"online\">\n" +
+    "      <i ng-class=\"{'fa fa-plus': !showWorkerField, 'fa fa-close': showWorkerField}\" title=\"Toggle Worker Field\"></i>\n" +
+    "      {{showWorkerField ? 'Hide' : 'Add'}} Worker\n" +
+    "    </button>\n" +
+    "    <button type=\"button\" ng-click=\"toggleReviewerField()\"\n" +
+    "      class=\"btn btn-default\" show-hide-by-connectivity=\"online\">\n" +
+    "      <i ng-class=\"{'fa fa-plus': !showReviewerField, 'fa fa-close': showReviewerField}\" title=\"Toggle Reviewer Field\"></i>\n" +
+    "      {{showReviewerField ? 'Hide' : 'Add'}} Reviewer\n" +
+    "    </button>\n" +
+    "  </div>\n" +
+    "  <div class=\"modal-footer\">\n" +
+    "    <button type=\"button\" ng-click=\"payout()\" class=\"btn btn-default\" ng-disabled=\"form.$invalid\" show-hide-by-connectivity=\"online\">\n" +
+    "      Payout\n" +
+    "    </button>\n" +
+    "    <button type=\"button\" ng-click=\"cancel()\" class=\"btn btn-danger\">\n" +
     "      Cancel\n" +
     "    </button>\n" +
     "  </div>\n" +
