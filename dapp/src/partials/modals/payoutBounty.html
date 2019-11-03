@@ -18,7 +18,7 @@
       </div>
       <div class="form-group">
         <label for="gardenerAmount">Gardener Amount (DAI)</label>
-        <input id="gardenerAmount" type="number" class="form-control" ng-model="gardener.amount" ng-min="1" max="999999999999999" required>
+        <input id="gardenerAmount" type="number" class="form-control" ng-model="gardener.amount" ng-min="1" max="2100" required>
       </div>
       <div class="checkbox">
         <label>
@@ -42,7 +42,7 @@
       <div class="form-group">
         <label for="workerAmount">Worker Amount (DAI)</label>
         <input id="workerAmount" type="number" class="form-control" ng-model="worker.amount"
-          ng-min="{{showWorkerField ? 1 : 0}}" max="999999999999999" required>
+          ng-min="{{showWorkerField ? 1 : 0}}" max="2100" required>
       </div>
       <div class="checkbox">
         <label>
@@ -66,7 +66,7 @@
       <div class="form-group">
         <label for="reviewerAmount">Reviewer Amount (DAI)</label>
         <input id="reviewerAmount" type="number" class="form-control" ng-model="reviewer.amount"
-          ng-min="{{showReviewerField ? 1 : 0}}" max="999999999999999" required>
+          ng-min="{{showReviewerField ? 1 : 0}}" max="2100" required>
       </div>
       <div class="checkbox">
         <label>
