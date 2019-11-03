@@ -99,14 +99,12 @@
             return;
           }
 
-          if (Web3Service.web3.isAddress($scope.worker.address)
-            || Web3Service.web3.isAddress(Web3Service.toChecksumAddress($scope.worker.address))) {
+          if (!Web3Service.web3.isAddress(Web3Service.toChecksumAddress($scope.worker.address))) {
             Utils.dangerAlert('Invalid worker address');
             return;
           }
 
-          if (Web3Service.web3.isAddress($scope.reviewer.address)
-            || Web3Service.web3.isAddress(Web3Service.toChecksumAddress($scope.reviewer.address))) {
+          if (!Web3Service.web3.isAddress(Web3Service.toChecksumAddress($scope.reviewer.address))) {
             Utils.dangerAlert('Invalid reviewer address');
             return;
           }
