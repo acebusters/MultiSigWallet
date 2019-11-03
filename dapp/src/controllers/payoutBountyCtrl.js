@@ -127,7 +127,7 @@
           const _reviewer = _getInput($scope.reviewer.address, $scope.reviewer.amount, $scope.reviewer.isRepOnly);
           const _bountyId = toHex($scope.bountyId.replace('https://github.com/leapdao', ''));
 
-          const contractAddress = '0x8B55748048414b09958398acDbb6021cf8B800D6'; // Rinkeby address
+          const contractAddress = '0x419cc2f8fa040f4ced1ac2708b406212b0ec5290'; // Mainnet address
           const contractInstance = Web3Service.web3.eth.contract(abiJSON.payoutBounty.abi).at(contractAddress);
           const walletInstance = Web3Service.web3.eth.contract(Wallet.json.multiSigDailyLimit.abi).at($scope.wallet.address);
 
