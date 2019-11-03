@@ -273,6 +273,13 @@
         return (hasPrefix ? '0x' : '') + new Array(padding).join(sign || '0') + string;
       };
 
+      factory.isAddressWithAmountParam = function (param) {
+        return (
+          (param.name == '_gardener' || param.name == '_reviewer' || param.name == '_worker')
+          && param.value.length === 66
+        );
+      };
+
       return factory;
     });
   }

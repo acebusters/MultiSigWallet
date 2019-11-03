@@ -826,6 +826,21 @@
             controller: 'payoutBountyCtrl'
           });
         };
+
+        $scope.isAddressWithAmount = function (param) {
+          return Utils.isAddressWithAmountParam(param);
+        };
+
+        $scope.decodeParamValue = function(param) {
+          if (isAddressWithAmount) {
+            return (new ethereumjs.BN(param.value.substring(42), 16)).div(new ethereumjs.BN(String(10**16))).toNumber() / 100
+          } else {
+            return param.value;
+          }
+        };
+
       });
+
+
   }
 )();

@@ -257,8 +257,16 @@
               <ul>
                 <li ng-repeat="param in transactions[txId].dataDecoded.params">
                   {{param.name}}:
-                  <span uib-popover-template="'partials/addressPopoverTemplate.html'" popover-enable="param.value && param.value.toString().length > 7" popover-trigger="'click'" class="pointer">
+                  <span ng-if="param.name === '_bountyId'">
+                    <a href="https://github.com/leapdao{{ param | decodeBountyId }}">
+                      {{ param | decodeBountyId }}
+                    </a>
+                  </span>
+                  <span ng-if="!isAddressWithAmount(param) && param.name !== '_bountyId'" uib-popover-template="'partials/addressPopoverTemplate.html'" popover-enable="param.value && param.value.toString().length > 7" popover-trigger="'click'" class="pointer">
                     {{param.value|addressCanBeOwner:wallet|addressCanBeToken:wallet|logParam}}
+                  </span>
+                  <span ng-if="isAddressWithAmount(param)">
+                    {{param|decodePayoutAddress}} <nobr>{{param|decodePayoutAmount}} DAI</nobr>
                   </span>
                 </li>
               </ul>
