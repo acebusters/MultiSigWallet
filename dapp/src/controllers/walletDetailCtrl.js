@@ -826,6 +826,13 @@
             controller: 'payoutBountyCtrl'
           });
         };
+
+        $scope.isAddressWithAmount = function (param) {
+          return Utils.isAddressWithAmountParam(param);
+        };
+
       });
+
+
   }
 )();

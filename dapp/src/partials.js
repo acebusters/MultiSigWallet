@@ -722,8 +722,16 @@ angular.module('multiSigWeb').run(['$templateCache', function($templateCache) {
     "              <ul>\n" +
     "                <li ng-repeat=\"param in transactions[txId].dataDecoded.params\">\n" +
     "                  {{param.name}}:\n" +
-    "                  <span uib-popover-template=\"'partials/addressPopoverTemplate.html'\" popover-enable=\"param.value && param.value.toString().length > 7\" popover-trigger=\"'click'\" class=\"pointer\">\n" +
+    "                  <span ng-if=\"param.name === '_bountyId'\">\n" +
+    "                    <a href=\"https://github.com/leapdao{{ param | decodeBountyId }}\">\n" +
+    "                      {{ param | decodeBountyId }}\n" +
+    "                    </a>\n" +
+    "                  </span>\n" +
+    "                  <span ng-if=\"!isAddressWithAmount(param) && param.name !== '_bountyId'\" uib-popover-template=\"'partials/addressPopoverTemplate.html'\" popover-enable=\"param.value && param.value.toString().length > 7\" popover-trigger=\"'click'\" class=\"pointer\">\n" +
     "                    {{param.value|addressCanBeOwner:wallet|addressCanBeToken:wallet|logParam}}\n" +
+    "                  </span>\n" +
+    "                  <span ng-if=\"isAddressWithAmount(param)\">\n" +
+    "                    {{param|decodePayoutAddress}} <nobr>{{param|decodePayoutAmount}} DAI</nobr>\n" +
     "                  </span>\n" +
     "                </li>\n" +
     "              </ul>\n" +
@@ -1984,7 +1992,13 @@ angular.module('multiSigWeb').run(['$templateCache', function($templateCache) {
     "      </div>\n" +
     "      <div class=\"form-group\">\n" +
     "        <label for=\"gardenerAmount\">Gardener Amount (DAI)</label>\n" +
-    "        <input id=\"gardenerAmount\" type=\"number\" class=\"form-control\" ng-model=\"gardener.amount\" ng-min=\"1\" max=\"999999999999999\" required>\n" +
+    "        <input id=\"gardenerAmount\" type=\"number\" class=\"form-control\" ng-model=\"gardener.amount\" ng-min=\"1\" max=\"2100\" required>\n" +
+    "      </div>\n" +
+    "      <div class=\"checkbox\">\n" +
+    "        <label>\n" +
+    "          <input type=\"checkbox\" ng-model=\"gardener.isRepOnly\">\n" +
+    "          Reputation only\n" +
+    "        </label>\n" +
     "      </div>\n" +
     "    </div>\n" +
     "\n" +
@@ -2001,7 +2015,14 @@ angular.module('multiSigWeb').run(['$templateCache', function($templateCache) {
     "      </div>\n" +
     "      <div class=\"form-group\">\n" +
     "        <label for=\"workerAmount\">Worker Amount (DAI)</label>\n" +
-    "        <input id=\"workerAmount\" type=\"number\" class=\"form-control\" ng-model=\"worker.amount\" ng-min=\"0\" max=\"999999999999999\" required>\n" +
+    "        <input id=\"workerAmount\" type=\"number\" class=\"form-control\" ng-model=\"worker.amount\"\n" +
+    "          ng-min=\"{{showWorkerField ? 1 : 0}}\" max=\"2100\" required>\n" +
+    "      </div>\n" +
+    "      <div class=\"checkbox\">\n" +
+    "        <label>\n" +
+    "          <input type=\"checkbox\" ng-model=\"worker.isRepOnly\">\n" +
+    "          Reputation only\n" +
+    "        </label>\n" +
     "      </div>\n" +
     "    </div>\n" +
     "\n" +
@@ -2018,7 +2039,22 @@ angular.module('multiSigWeb').run(['$templateCache', function($templateCache) {
     "      </div>\n" +
     "      <div class=\"form-group\">\n" +
     "        <label for=\"reviewerAmount\">Reviewer Amount (DAI)</label>\n" +
-    "        <input id=\"reviewerAmount\" type=\"number\" class=\"form-control\" ng-model=\"reviewer.amount\" ng-min=\"0\" max=\"999999999999999\" required>\n" +
+    "        <input id=\"reviewerAmount\" type=\"number\" class=\"form-control\" ng-model=\"reviewer.amount\"\n" +
+    "          ng-min=\"{{showReviewerField ? 1 : 0}}\" max=\"2100\" required>\n" +
+    "      </div>\n" +
+    "      <div class=\"checkbox\">\n" +
+    "        <label>\n" +
+    "          <input type=\"checkbox\" ng-model=\"reviewer.isRepOnly\">\n" +
+    "          Reputation only\n" +
+    "        </label>\n" +
+    "      </div>\n" +
+    "    </div>\n" +
+    "\n" +
+    "    <div class=\"form-control-static\">\n" +
+    "      <div class=\"form-group\">\n" +
+    "        <label for=\"bountyId\">Bounty URL</label>\n" +
+    "        <input id=\"bountyId\" type=\"text\" class=\"form-control\" ng-model=\"bountyId\"\n" +
+    "          placeholder=\"https://github.com/leapdao/MultiSigWallet/issues/8\" maxlength=\"58\" required>\n" +
     "      </div>\n" +
     "    </div>\n" +
     "\n" +
@@ -2033,7 +2069,9 @@ angular.module('multiSigWeb').run(['$templateCache', function($templateCache) {
     "    </button>\n" +
     "  </div>\n" +
     "  <div class=\"modal-footer\">\n" +
-    "    <button type=\"button\" ng-click=\"payout()\" class=\"btn btn-default\" ng-disabled=\"form.$invalid\" show-hide-by-connectivity=\"online\">\n" +
+    "    <button type=\"button\" ng-click=\"payout()\" class=\"btn btn-default\"\n" +
+    "      disabled-if-invalid-address=\"{{gardener.address}}\"\n" +
+    "      ng-disabled=\"form.$invalid\" show-hide-by-connectivity=\"online\">\n" +
     "      Payout\n" +
     "    </button>\n" +
     "    <button type=\"button\" ng-click=\"cancel()\" class=\"btn btn-danger\">\n" +
