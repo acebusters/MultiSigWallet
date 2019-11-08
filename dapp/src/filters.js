@@ -1,3 +1,4 @@
+/* global angular, ethereumjs, moment, Web3 */
 (
   function () {
     const addressBookNameOrFalse = function (addressCandidate) {
@@ -158,7 +159,11 @@
     })
     .filter('decodePayoutAmount', function() {
       return function (param) {
-        return (new ethereumjs.BN(param.value.substring(42), 16)).div(new ethereumjs.BN(String(10**16))).toNumber() / 100;
+        const val = new ethereumjs.BN(param.value.substring(42), 16);
+        const roundValue = val.div(new ethereumjs.BN(String(10**16))).toNumber() / 100;
+        const isRepOnly = val.toString().slice(-1) === '1';
+        const unit = isRepOnly ? 'reputation points' : 'DAI';
+        return `${roundValue} ${unit}`;
       };
     })
     .filter('decodePayoutAddress', function(Web3Service) {
