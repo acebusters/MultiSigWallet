@@ -2,8 +2,6 @@
   function () {
     const addressBookNameOrFalse = function (addressCandidate) {
       var addressBook = JSON.parse(localStorage.getItem('addressBook') || '{}');
-      console.log(addressBook, addressCandidate);
-      console.log(addressBook[addressCandidate]);
       return (addressBook[addressCandidate] && addressBook[addressCandidate].name || false);
     };
 
