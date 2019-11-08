@@ -1,3 +1,4 @@
+/* global angular, ethereumjs, moment, Web3 */
 (
   function () {
     angular
@@ -143,7 +144,7 @@
         return text || text === 0 ? $sce.trustAsHtml(text.toString()) : $sce.trustAsHtml("<p class='text-center'>\n-\n</p>");
       };
     })
-    .filter('addressBookNameOrFalse', function (Wallet) {
+    .filter('addressBookNameOrFalse', function () {
       return function (addressCandidate) {
         var addressBook = JSON.parse(localStorage.getItem('addressBook') || '{}');
         return (addressBook[addressCandidate] && addressBook[addressCandidate].name || false);
@@ -156,7 +157,11 @@
     })
     .filter('decodePayoutAmount', function() {
       return function (param) {
-        return (new ethereumjs.BN(param.value.substring(42), 16)).div(new ethereumjs.BN(String(10**16))).toNumber() / 100;
+        const val = new ethereumjs.BN(param.value.substring(42), 16);
+        const roundValue = val.div(new ethereumjs.BN(String(10**16))).toNumber() / 100;
+        const isRepOnly = val.toString().slice(-1) === '1';
+        const unit = isRepOnly ? 'reputation points' : 'DAI';
+        return `${roundValue} ${unit}`;
       };
     })
     .filter('decodePayoutAddress', function() {
