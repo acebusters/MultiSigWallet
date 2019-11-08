@@ -1,5 +1,12 @@
 (
   function () {
+    const addressBookNameOrFalse = function (addressCandidate) {
+      var addressBook = JSON.parse(localStorage.getItem('addressBook') || '{}');
+      console.log(addressBook, addressCandidate);
+      console.log(addressBook[addressCandidate]);
+      return (addressBook[addressCandidate] && addressBook[addressCandidate].name || false);
+    };
+
     angular
     .module("multiSigWeb")
     .filter('objectToArray', function () {
@@ -143,11 +150,8 @@
         return text || text === 0 ? $sce.trustAsHtml(text.toString()) : $sce.trustAsHtml("<p class='text-center'>\n-\n</p>");
       };
     })
-    .filter('addressBookNameOrFalse', function (Wallet) {
-      return function (addressCandidate) {
-        var addressBook = JSON.parse(localStorage.getItem('addressBook') || '{}');
-        return (addressBook[addressCandidate] && addressBook[addressCandidate].name || false);
-      }
+    .filter('addressBookNameOrFalse', function () {
+      return addressBookNameOrFalse;
     })
     .filter('decodeBountyId', function() {
       return function (param) {
@@ -159,9 +163,10 @@
         return (new ethereumjs.BN(param.value.substring(42), 16)).div(new ethereumjs.BN(String(10**16))).toNumber() / 100;
       };
     })
-    .filter('decodePayoutAddress', function() {
+    .filter('decodePayoutAddress', function(Web3Service) {
       return function (param) {
-        return param.value.substring(0, 42);
+        const addr = Web3Service.toChecksumAddress(param.value.substring(0, 42));
+        return addressBookNameOrFalse(addr) || addr;
       };
     })
     .filter('addressCanBeOwner', function (Wallet) {
