@@ -731,7 +731,7 @@ angular.module('multiSigWeb').run(['$templateCache', function($templateCache) {
     "                    {{param.value|addressCanBeOwner:wallet|addressCanBeToken:wallet|logParam}}\n" +
     "                  </span>\n" +
     "                  <span ng-if=\"isAddressWithAmount(param)\">\n" +
-    "                    {{param|decodePayoutAddress}} <nobr>{{param|decodePayoutAmount}} DAI</nobr>\n" +
+    "                    <br>{{param|decodePayoutAddress}} <br/><nobr>Payout: {{param|decodePayoutAmount}}</nobr>\n" +
     "                  </span>\n" +
     "                </li>\n" +
     "              </ul>\n" +
