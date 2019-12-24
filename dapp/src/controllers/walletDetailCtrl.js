@@ -2,7 +2,10 @@
   function () {
     angular
       .module("multiSigWeb")
-      .controller("walletDetailCtrl", function ($scope, $filter, $routeParams, $uibModal, $interval, $location, ABI, Token, Utils, Wallet, Web3Service) {
+      .controller("walletDetailCtrl", function ($scope, $filter, $routeParams, $uibModal, $interval, $location, ABI, Token, Utils, Wallet, Web3Service, Config) {
+        const config = Config.getUserConfiguration();        
+        $scope.daiContractAddress = config.daiContractAddress || '0x6B175474E89094C44Da98b954EedeAC495271d0F';
+
         $scope.wallet = {};
 
         // Javascript doesn't have a deep object copy, this is a patch
