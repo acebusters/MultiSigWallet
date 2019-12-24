@@ -29,6 +29,8 @@ var txDefaultOrig =
   defaultChainID: null,
   // Mainnet
   walletFactoryAddress: "0x6e95c8e8557abc08b46f3c347ba06f8dc012763f",
+  bountyPayoutContract: "0x572d03fd45e85d5ca0bcd3679c99000d23a6b8f1",
+  daiContractAddress: "0x6B175474E89094C44Da98b954EedeAC495271d0F",
   tokens: [
     {
       'address': '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2',

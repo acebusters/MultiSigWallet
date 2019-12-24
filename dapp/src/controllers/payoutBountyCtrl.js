@@ -2,11 +2,13 @@
   function () {
     angular
       .module("multiSigWeb")
-      .controller("payoutBountyCtrl", function ($scope, Wallet, Transaction, Utils, wallet, $uibModal, $uibModalInstance, Web3Service) {
+      .controller("payoutBountyCtrl", function ($scope, Wallet, Transaction, Utils, wallet, $uibModal, $uibModalInstance, Web3Service, Config) {
 
         $scope.wallet = wallet;
         $scope.showWorkerField = false;
         $scope.showReviewerField = false;
+        const config = Config.getUserConfiguration();
+        $scope.bountyPayoutContract = config.bountyPayoutContract ||'0x572d03fd45e85d5ca0bcd3679c99000d23a6b8f1';
 
         $scope.gardener = {
           address: Web3Service.coinbase,
@@ -125,7 +127,7 @@
           const _reviewer = _getInput($scope.reviewer.address, $scope.reviewer.amount, $scope.reviewer.isRepOnly);
           const _bountyId = toHex($scope.bountyId.replace('https://github.com/leapdao', ''));
 
-          const contractAddress = '0x419cc2f8fa040f4ced1ac2708b406212b0ec5290'; // Mainnet address
+          const contractAddress = $scope.bountyPayoutContract;
           const contractInstance = Web3Service.web3.eth.contract(abiJSON.payoutBounty.abi).at(contractAddress);
           const walletInstance = Web3Service.web3.eth.contract(Wallet.json.multiSigDailyLimit.abi).at($scope.wallet.address);
 
